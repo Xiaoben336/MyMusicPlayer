@@ -9,7 +9,7 @@ cmake_minimum_required(VERSION 3.22.1)
 # Since this is the top level CMakeLists.txt, the project name is also accessible
 # with ${CMAKE_PROJECT_NAME} (both CMake variables are in-sync within the top level
 # build script scope).
-project("mymusicplayer")
+project("myplayer")
 
 #设置库文件 头文件变量.
 set(ffmpeg_lib_dir ${CMAKE_SOURCE_DIR}/../../..//libs/${ANDROID_ABI})
