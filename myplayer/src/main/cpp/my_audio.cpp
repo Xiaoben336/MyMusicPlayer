@@ -8,6 +8,7 @@ MyAudio::~MyAudio() {
 
 }
 
-MyAudio::MyAudio() {
-
+MyAudio::MyAudio(MyPlayStatus *myPlayStatus) {
+    this->pMyPlayStatus = myPlayStatus;
+    this->pAVPacketQueue = new AVPacketQueue(myPlayStatus);
 }

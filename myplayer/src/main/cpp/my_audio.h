@@ -5,6 +5,9 @@
 #ifndef MYMUSICPLAYER_MY_AUDIO_H
 #define MYMUSICPLAYER_MY_AUDIO_H
 
+#include "av_packet_queue.h"
+#include "my_play_status.h"
+
 extern "C"
 {
 #include "include/ffmpeg/libavcodec/avcodec.h"
@@ -14,10 +17,13 @@ extern "C"
 class MyAudio {
 public:
     int mStreamIndex = -1;
-    AVCodecParameters *pCodecParameters;
-    AVCodecContext *pCodexContext;
+    AVCodecParameters *pCodecParameters = NULL;
+    AVCodecContext *pCodexContext = NULL;
 
-    MyAudio();
+    AVPacketQueue *pAVPacketQueue = NULL;
+    MyPlayStatus *pMyPlayStatus = NULL;
+
+    MyAudio(MyPlayStatus *myPlayStatus);
     ~MyAudio();
 };
 

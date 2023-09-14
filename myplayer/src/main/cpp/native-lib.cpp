@@ -11,6 +11,7 @@ extern "C"
 _JavaVM *javaVM;
 CallJava *callJava = NULL;
 MyFFmpeg *myFFmpeg = NULL;
+MyPlayStatus *myPlayStatus = NULL;
 
 JNIEXPORT jint JNICALL
 JNI_OnLoad(_JavaVM *vm,void *reserved)
@@ -42,7 +43,8 @@ Java_com_zjf_myplayer_player_MyMediaPlayer_native_1prepared(JNIEnv *env, jobject
         {
             callJava = new CallJava(javaVM,env,thiz);
         }
-        myFFmpeg = new MyFFmpeg(callJava,ch_source);
+        myPlayStatus = new MyPlayStatus();
+        myFFmpeg = new MyFFmpeg(callJava,ch_source,myPlayStatus);
         myFFmpeg->Prepared();
     }
     env->ReleaseStringUTFChars(source, ch_source);

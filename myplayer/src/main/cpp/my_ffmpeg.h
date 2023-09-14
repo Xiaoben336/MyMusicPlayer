@@ -18,13 +18,14 @@ constexpr const char* TAG_MyFFmpeg = "MyFFmpeg";
 class MyFFmpeg {
 public:
     CallJava *m_CallJava = NULL;
-    const char *m_Source;
+    const char *m_Source = NULL;
     pthread_t m_DecodeThread;
 
-    AVFormatContext *pFormatContext;
+    AVFormatContext *pFormatContext = NULL;
     MyAudio *pMyAudio = NULL;
+    MyPlayStatus *pMyPlayStatus = NULL;
 
-    MyFFmpeg(CallJava *callJava, const char *source);
+    MyFFmpeg(CallJava *callJava, const char *source, MyPlayStatus *myPlayStatus);
     void Prepared();
     void DecodeFFmpegThread();
     void Start();

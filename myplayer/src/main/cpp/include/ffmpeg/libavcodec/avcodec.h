@@ -2407,12 +2407,12 @@ int avcodec_parameters_to_context(AVCodecContext *codec,
  * av_dict_set(&opts, "b", "2.5M", 0);
  * codec = avcodec_find_decoder(AV_CODEC_ID_H264);
  * if (!codec)
- *     exit(1);
+ *     mExit(1);
  *
  * context = avcodec_alloc_context3(codec);
  *
  * if (avcodec_open2(context, codec, opts) < 0)
- *     exit(1);
+ *     mExit(1);
  * @endcode
  *
  * @param avctx The context to initialize.

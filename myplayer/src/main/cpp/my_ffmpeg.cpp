@@ -4,8 +4,8 @@
 
 #include "my_ffmpeg.h"
 
-MyFFmpeg::MyFFmpeg(CallJava *callJava, const char *source)
-        : m_CallJava(callJava), m_Source(source)
+MyFFmpeg::MyFFmpeg(CallJava *callJava, const char *source, MyPlayStatus *myPlayStatus)
+        : m_CallJava(callJava), m_Source(source),pMyPlayStatus(myPlayStatus)
 {
 
 }
@@ -42,7 +42,7 @@ void MyFFmpeg::DecodeFFmpegThread()
         {
             if (NULL == pMyAudio)
             {
-                pMyAudio = new MyAudio();
+                pMyAudio = new MyAudio(pMyPlayStatus);
                 pMyAudio->mStreamIndex = i;
                 pMyAudio->pCodecParameters = pFormatContext->streams[i]->codecpar;
             }
@@ -91,9 +91,10 @@ void MyFFmpeg::Start() {
             if (pAVPacket->stream_index == pMyAudio->mStreamIndex) {
                 count++;
                 LOGI(TAG_MyFFmpeg,"解碼第 %d 帧",count);
-                av_packet_free(&pAVPacket);
-                av_free(pAVPacket);
-                pAVPacket = NULL;
+//                av_packet_free(&pAVPacket);
+//                av_free(pAVPacket);
+//                pAVPacket = NULL;
+                pMyAudio->pAVPacketQueue->PutAVPacket(pAVPacket);
             }
             else
             {
@@ -109,4 +110,15 @@ void MyFFmpeg::Start() {
             break;
         }
     }
+
+    while(pMyAudio->pAVPacketQueue->GetSize() > 0)
+    {
+        AVPacket *avPacket = av_packet_alloc();
+        pMyAudio->pAVPacketQueue->GetAVPacket(avPacket);
+        av_packet_free(&avPacket);
+        av_free(avPacket);
+        avPacket = NULL;
+    }
+
+    LOGI(TAG_MyFFmpeg,"解码完成");
 }

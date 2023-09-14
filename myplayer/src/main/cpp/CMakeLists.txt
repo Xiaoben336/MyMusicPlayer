@@ -36,6 +36,8 @@ add_library(${CMAKE_PROJECT_NAME} SHARED
         call_java.cpp
         my_ffmpeg.cpp
         my_audio.cpp
+        my_play_status.cpp
+        av_packet_queue.cpp
         native-lib.cpp)
 
 #ffmpeg----------------------------------------
